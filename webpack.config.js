@@ -13,7 +13,6 @@ const baseConfig = {
                 test: /\.css$/i,
                 use: ['style-loader', 'css-loader'],
             },
-            // Добавьте это правило для обработки TypeScript файлов
             {
                 test: /\.tsx?$/,
                 use: 'ts-loader',
@@ -25,8 +24,9 @@ const baseConfig = {
         extensions: ['.ts', '.js'],
     },
     output: {
-        filename: 'index.js', // Измените расширение на .js
+        filename: 'index.js',
         path: path.resolve(__dirname, './dist'),
+        publicPath: './',
     },
     plugins: [
         new DotenvWebpackPlugin(),
