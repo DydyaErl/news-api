@@ -42,7 +42,11 @@ class Loader<T> {
     }
 
     private load(method: string, endpoint: string, callback: (data: T) => void, options: RequestOptions = {}): void {
+        console.log('Fetching:', this.makeUrl(options, endpoint));
         fetch(this.makeUrl(options, endpoint), { method })
+
+        fetch(this.makeUrl(options, endpoint), { method })
+
             .then(this.errorHandler)
             .then((res) => res.json())
             .then((data) => callback(data as T))
