@@ -1,13 +1,21 @@
 import Loader from './loader';
 import { NewsResponse, SourcesResponse } from '../../types';
 
-// Используем объединение типов для поддержки всех возможных типов ответов
-type ApiResponse = NewsResponse | SourcesResponse;
 
-class AppLoader extends Loader<ApiResponse> {
+type ApiEndpoints = 'everything' | 'sources';
+type ApiOptions = Pick<RequestInit, 'method' | 'headers'>;
+
+class AppLoader extends Loader<NewsResponse | SourcesResponse> {
     constructor() {
-        super(process.env.API_URL as string, {
-            apiKey: process.env.API_KEY as string,
+        const apiKey = process.env.API_KEY;
+        const apiUrl = process.env.API_URL;
+        
+        if (!apiKey || !apiUrl) {
+            throw new Error('API configuration is missing');
+        }
+
+        super(apiUrl, {
+            apiKey: apiKey,
         });
     }
 }
