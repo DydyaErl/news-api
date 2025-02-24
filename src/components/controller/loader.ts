@@ -2,7 +2,7 @@ interface RequestOptions {
     [key: string]: string;
 }
 
-class Loader {
+class Loader<T> {
     protected baseLink: string;
     protected options: RequestOptions;
 
@@ -13,7 +13,7 @@ class Loader {
 
     public getResp(
         { endpoint, options = {} }: { endpoint: string; options?: RequestOptions },
-        callback: (data: unknown) => void = () => {
+        callback: (data: T) => void = () => {
             console.error('No callback for GET response');
         }
     ): void {
@@ -41,11 +41,11 @@ class Loader {
         return url.slice(0, -1);
     }
 
-    private load(method: string, endpoint: string, callback: (data: unknown) => void, options: RequestOptions = {}): void {
+    private load(method: string, endpoint: string, callback: (data: T) => void, options: RequestOptions = {}): void {
         fetch(this.makeUrl(options, endpoint), { method })
             .then(this.errorHandler)
             .then((res) => res.json())
-            .then((data) => callback(data))
+            .then((data) => callback(data as T))
             .catch((err) => console.error(err));
     }
 }

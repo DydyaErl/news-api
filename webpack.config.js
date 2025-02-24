@@ -13,13 +13,19 @@ const baseConfig = {
                 test: /\.css$/i,
                 use: ['style-loader', 'css-loader'],
             },
+            // Добавьте это правило для обработки TypeScript файлов
+            {
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/,
+            },
         ],
     },
     resolve: {
-        extensions: ['.js'],
+        extensions: ['.ts', '.js'],
     },
     output: {
-        filename: 'index.ts',
+        filename: 'index.js', // Измените расширение на .js
         path: path.resolve(__dirname, './dist'),
     },
     plugins: [

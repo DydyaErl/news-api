@@ -1,30 +1,7 @@
+// appView.ts
 import News from './news/news';
 import Sources from './sources/sources';
-
-
-interface SourceItem {
-    id: string;
-    name: string;
-    description?: string;
-    url?: string;
-    category?: string;
-    language?: string;
-    country?: string;
-}
-
-interface NewsArticle {
-    source: {
-        id: string | null;
-        name: string;
-    };
-    author: string | null;
-    title: string;
-    description: string;
-    url: string;
-    urlToImage: string | null;
-    publishedAt: string;
-    content: string | null;
-}
+import { NewsArticle, SourceItem, NewsResponse, SourcesResponse } from '../../types';
 
 export class AppView {
     private news: News;
@@ -35,12 +12,12 @@ export class AppView {
         this.sources = new Sources();
     }
 
-    public drawNews(data: { articles?: NewsArticle[] }): void {
+    public drawNews(data: NewsResponse): void {
         const values = data?.articles ?? [];
         this.news.draw(values);
     }
 
-    public drawSources(data: { sources?: SourceItem[] }): void {
+    public drawSources(data: SourcesResponse): void {
         const values = data?.sources ?? [];
         this.sources.draw(values);
     }
