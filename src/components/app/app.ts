@@ -1,4 +1,3 @@
-// app.ts
 import AppController from '../controller/controller';
 import { AppView } from '../view/appView';
 import { NewsResponse, SourcesResponse } from '../../types';

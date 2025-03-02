@@ -1,7 +1,6 @@
-// appView.ts
 import News from './news/news';
 import Sources from './sources/sources';
-import { NewsArticle, SourceItem, NewsResponse, SourcesResponse } from '../../types';
+import { NewsResponse, SourcesResponse } from '../../types';
 
 export class AppView {
     private news: News;

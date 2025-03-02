@@ -2,7 +2,9 @@ interface RequestOptions {
     [key: string]: string;
 }
 
-class Loader<T> {
+type TCallback<T> = (data: T) => void;
+
+class Loader {
     protected baseLink: string;
     protected options: RequestOptions;
 
@@ -11,13 +13,13 @@ class Loader<T> {
         this.options = options;
     }
 
-    public getResp(
+    public getResp<T>(
         { endpoint, options = {} }: { endpoint: string; options?: RequestOptions },
-        callback: (data: T) => void = () => {
+        callback: TCallback<T> = () => {
             console.error('No callback for GET response');
         }
     ): void {
-        this.load('GET', endpoint, callback, options);
+        this.load<T>('GET', endpoint, callback, options);
     }
 
     private errorHandler(res: Response): Response {
@@ -41,7 +43,12 @@ class Loader<T> {
         return url.slice(0, -1);
     }
 
-    private load(method: string, endpoint: string, callback: (data: T) => void, options: RequestOptions = {}): void {
+    private load<T>(
+        method: string, 
+        endpoint: string, 
+        callback: TCallback<T>, 
+        options: RequestOptions = {}
+    ): void {
         console.log('Fetching:', this.makeUrl(options, endpoint));
         fetch(this.makeUrl(options, endpoint), { method })
 

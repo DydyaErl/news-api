@@ -3,11 +3,11 @@ import { NewsResponse, SourcesResponse } from '../../types';
 
 class AppController extends AppLoader {
     public getSources(callback: (data: SourcesResponse) => void): void {
-        super.getResp(
+        super.getResp<SourcesResponse>(
             {
                 endpoint: 'sources',
             },
-            callback as (data: NewsResponse | SourcesResponse) => void
+            callback
         );
     }
 
@@ -20,14 +20,14 @@ class AppController extends AppLoader {
                 const sourceId = target.getAttribute('data-source-id');
                 if (sourceId && newsContainer.getAttribute('data-source') !== sourceId) {
                     newsContainer.setAttribute('data-source', sourceId);
-                    super.getResp(
+                    super.getResp<NewsResponse>(
                         {
                             endpoint: 'everything',
                             options: {
                                 sources: sourceId,
                             },
                         },
-                        callback as (data: NewsResponse | SourcesResponse) => void
+                        callback
                     );
                 }
                 return;
